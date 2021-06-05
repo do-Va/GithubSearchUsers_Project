@@ -7,7 +7,7 @@ const Repos = () => {
   const { repos } = React.useContext(GithubContext);
   console.log(repos);
 
-  return <h2>repos component</h2>;
+  return <ExampleChart />;
 };
 
 const Wrapper = styled.div`
