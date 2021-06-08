@@ -6,30 +6,41 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 const Repos = () => {
   const { repos } = React.useContext(GithubContext);
 
-  let languages = repos.reduce((total, item) => {
-    const { language } = item;
+  const languages = repos.reduce((total, item) => {
+    const { language, stargazers_count } = item;
 
     // null değer gelirse totali gönder.
     if (!language) return total;
 
     // eğer total objesi içerisinde gelen language değeri ile aynı isme sahip property yoksa yeni oluştur.
     if (!total[language]) {
-      total[language] = { label: language, value: 1 };
+      total[language] = { label: language, value: 1, stars: stargazers_count };
 
       // eğer varsa aynı isime sahip propertynin değerine 1 ekle
     } else {
       total[language] = {
         ...total[language],
         value: total[language].value + 1,
+        stars: total[language].stars + stargazers_count,
       };
     }
 
     return total;
   }, {});
 
-  languages = Object.values(languages)
+  const mostUsed = Object.values(languages)
     .sort((a, b) => {
       return b.value - a.value;
+    })
+    .slice(0, 5);
+
+  // most stars per language
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return b.stars - a.stars;
+    })
+    .map(item => {
+      return { ...item, value: item.stars };
     })
     .slice(0, 5);
 
@@ -51,9 +62,9 @@ const Repos = () => {
   return (
     <section className="section">
       <Wrapper className="section-center">
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsed} />
         <div></div>
-        <ExampleChart data={chartData} />
+        <Doughnut2D data={mostPopular} />
         <div></div>
       </Wrapper>
     </section>
