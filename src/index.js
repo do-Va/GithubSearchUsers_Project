@@ -8,9 +8,15 @@ import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GithubProvider>
-      <App />
-    </GithubProvider>
+    <Auth0Provider
+      domain="dova.us.auth0.com"
+      clientId="vXLf2o9FbCLX6UJi0uSII11l2ZYJy5wu"
+      redirectUri={window.location.origin}
+    >
+      <GithubProvider>
+        <App />
+      </GithubProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
