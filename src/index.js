@@ -12,6 +12,7 @@ ReactDOM.render(
       domain="dova.us.auth0.com"
       clientId="vXLf2o9FbCLX6UJi0uSII11l2ZYJy5wu"
       redirectUri={window.location.origin}
+      cacheLocation="localstorage"
     >
       <GithubProvider>
         <App />
